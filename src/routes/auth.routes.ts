@@ -16,6 +16,7 @@ const router = express.Router();
  *   post:
  *     summary: Register a new user
  *     tags: [Auth]
+ *     security: []
  *     requestBody:
  *       required: true
  *       content:
@@ -36,6 +37,14 @@ const router = express.Router();
  *     responses:
  *       201:
  *         description: User registered
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: User registered
+ *               user:
+ *                 id: 1
+ *                 name: John Doe
+ *                 email: john@example.com
  *       400:
  *         description: Email already exists
  */
@@ -48,6 +57,7 @@ router.post("/register", register);
  *   post:
  *     summary: Log in a user
  *     tags: [Auth]
+ *     security: []
  *     requestBody:
  *       required: true
  *       content:
@@ -65,6 +75,15 @@ router.post("/register", register);
  *     responses:
  *       200:
  *         description: Login successful
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: Login successful
+ *               token: jwt-token-here
+ *               user:
+ *                 id: 1
+ *                 name: John Doe
+ *                 email: john@example.com
  *       404:
  *         description: User not found
  *       401:

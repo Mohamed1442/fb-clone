@@ -1,5 +1,10 @@
 import swaggerJSDoc from "swagger-jsdoc";
 
+const serverUrl =
+  process.env.NODE_ENV === "production"
+    ? "https://www.fb-clone-production.up.railway.app"
+    : "http://localhost:4000";
+
 export const swaggerOptions: swaggerJSDoc.Options = {
   definition: {
     openapi: "3.0.0",
@@ -10,8 +15,11 @@ export const swaggerOptions: swaggerJSDoc.Options = {
     },
     servers: [
       {
-        url: "http://localhost:4000",
-        description: "Development server",
+        url: serverUrl,
+        description:
+          process.env.NODE_ENV === "production"
+            ? "Production server"
+            : "Development server",
       },
     ],
     components: {

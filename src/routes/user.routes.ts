@@ -26,6 +26,32 @@ const router = Router();
  *     responses:
  *       200:
  *         description: A list of users
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: string
+ *                   name:
+ *                     type: string
+ *                   email:
+ *                     type: string
+ *                   profilePic:
+ *                     type: string
+ *                     nullable: true
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Failed to fetch users
  */
 // @ts-ignore
 router.get("/", authenticate, getAllUsers);
@@ -45,9 +71,41 @@ router.get("/", authenticate, getAllUsers);
  *         description: The user ID
  *     responses:
  *       200:
- *         description: User data
+ *         description: User found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                 name:
+ *                   type: string
+ *                 email:
+ *                   type: string
+ *                 profilePic:
+ *                   type: string
+ *                   nullable: true
  *       404:
  *         description: User not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: User not found
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Error fetching user
  */
 // @ts-ignore
 router.get("/:id", authenticate, getUserById);
@@ -71,7 +129,31 @@ router.get("/:id", authenticate, getUserById);
  *                 type: string
  *     responses:
  *       200:
- *         description: Updated user
+ *         description: User updated
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                 name:
+ *                   type: string
+ *                 email:
+ *                   type: string
+ *                 profilePic:
+ *                   type: string
+ *                   nullable: true
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Error updating user
  */
 // @ts-ignore
 router.put("/", authenticate, updateUserProfile);
