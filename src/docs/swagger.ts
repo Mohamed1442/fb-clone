@@ -2,7 +2,7 @@ import swaggerJSDoc from "swagger-jsdoc";
 
 const serverUrl =
   process.env.NODE_ENV === "production"
-    ? "https://www.fb-clone-production.up.railway.app"
+    ? "https://fb-clone-production.up.railway.app"
     : "http://localhost:4000";
 
 export const swaggerOptions: swaggerJSDoc.Options = {
