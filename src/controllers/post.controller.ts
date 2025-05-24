@@ -126,3 +126,60 @@ export const commentOnPost = async (
     return res.status(500).json({ error: "Failed to add comment" });
   }
 };
+
+// Update a post
+export const updatePost = async (
+  req: Request & { userId?: string },
+  res: Response
+) => {
+  const postId = req.params.id;
+  const { content, image } = req.body;
+
+  try {
+    // Find the post first
+    const post = await prisma.post.findUnique({ where: { id: postId } });
+
+    if (!post) return res.status(404).json({ message: "Post not found" });
+
+    // Check if the current user is the author
+    if (post.authorId !== req.userId) {
+      return res.status(403).json({ message: "Unauthorized" });
+    }
+
+    const updatedPost = await prisma.post.update({
+      where: { id: postId },
+      data: {
+        content,
+        imageUrl: image,
+      },
+    });
+
+    return res.json(updatedPost);
+  } catch (err) {
+    return res.status(500).json({ error: "Failed to update post" });
+  }
+};
+
+// Delete a post
+export const deletePost = async (
+  req: Request & { userId?: string },
+  res: Response
+) => {
+  const postId = req.params.id;
+
+  try {
+    const post = await prisma.post.findUnique({ where: { id: postId } });
+
+    if (!post) return res.status(404).json({ message: "Post not found" });
+
+    if (post.authorId !== req.userId) {
+      return res.status(403).json({ message: "Unauthorized" });
+    }
+
+    await prisma.post.delete({ where: { id: postId } });
+
+    return res.json({ message: "Post deleted successfully" });
+  } catch (err) {
+    return res.status(500).json({ error: "Failed to delete post" });
+  }
+};
