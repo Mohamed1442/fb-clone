@@ -176,6 +176,11 @@ export const deletePost = async (
       return res.status(403).json({ message: "Unauthorized" });
     }
 
+    // Delete dependent records first
+    await prisma.like.deleteMany({ where: { postId } });
+    await prisma.comment.deleteMany({ where: { postId } });
+
+    // Finally, delete the post
     await prisma.post.delete({ where: { id: postId } });
 
     return res.json({ message: "Post deleted successfully" });
